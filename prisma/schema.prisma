@@ -67,3 +67,115 @@ model VerificationToken {
   @@unique([identifier, token])
   @@map("tokens")
 }
+
+model Board {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  description String?
+  ownerId String
+  members String[] @default([])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("boards")
+}
+
+model List {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  boardId String
+  position Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("lists")
+}
+
+model Card {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  description String?
+  listId String
+  position Int
+  dueDate DateTime?
+  labels String[]
+  members String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cards")
+}
+
+model Label {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  color String
+  boardId String
+
+  @@map("labels")
+}
+
+model Comment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  cardId String
+  userId String
+  content String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("comments")
+}
+
+model Attachment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  cardId String
+  url String
+  filename String
+  createdAt DateTime @default(now())
+
+  @@map("attachments")
+}
+
+model Activity {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  type String
+  userId String
+  boardId String
+  listId String?
+  cardId String?
+  description String
+  createdAt DateTime @default(now())
+
+  @@map("activities")
+}
+
+model Notification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String
+  content String
+  isRead Boolean @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("notifications")
+}
+
+model Team {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  ownerId String
+  members String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("teams")
+}
+
+model TeamBoard {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  teamId String
+  boardId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("teamBoards")
+}
