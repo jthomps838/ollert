@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 import prisma from '@/app/utils/connect';
 import { BoardType } from '@/app/utils/types';
@@ -19,7 +19,7 @@ async function GET() {
     }
 }
 
-async function POST(req: Request) {
+async function POST(req: NextRequest) {
     const body = await req.json();
     const { name, description, ownerId, members }: CreateBoardRequest = body;
     try {
@@ -38,7 +38,7 @@ async function POST(req: Request) {
     }
 }
 
-async function PUT(req: Request) {
+async function PUT(req: NextRequest) {
     const body = await req.json();
     const { name, description, ownerId, members, id }: CreateBoardRequest =
         body;
